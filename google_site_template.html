@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Falcon Style — Template</title>
+  <meta name="description" content="Responsive clothing store template. Replace logo, images and products with your own." />
+  <style>
+    :root{
+      --accent:#1f2937; /* dark slate */
+      --accent-2:#ef4444; /* red accent */
+      --muted:#6b7280;
+      --card-bg:#ffffff;
+      --page-bg:#f3f4f6;
+      --radius:12px;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--page-bg);color:#111}
+    header{background:white;padding:12px 20px;display:flex;align-items:center;gap:20px;box-shadow:0 2px 6px rgba(16,24,40,0.06)}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo img{height:46px;width:46px;border-radius:8px;object-fit:cover}
+    .brand{font-weight:700;font-size:18px}
+    nav{margin-left:auto;display:flex;gap:14px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .search{flex:0 0 260px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;padding:28px;align-items:center}
+    .hero .promo{background:linear-gradient(180deg,white, #fff);padding:28px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .hero h1{margin:0 0 8px;font-size:32px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .cta{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:700}
+    .side-img{background:linear-gradient(90deg, #fff, #fafafa);padding:18px;border-radius:12px;display:flex;justify-content:center;align-items:center}
+    .side-img img{width:100%;max-width:360px;border-radius:10px}
+    .container{max-width:1100px;margin:18px auto;padding:0 18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+    .card{background:var(--card-bg);padding:14px;border-radius:12px;box-shadow:0 6px 14px rgba(15,23,42,0.04);display:flex;flex-direction:column}
+    .card img{width:100%;height:220px;object-fit:cover;border-radius:10px}
+    .card h3{margin:10px 0 6px;font-size:16px}
+    .price-row{display:flex;justify-content:space-between;align-items:center}
+    .price{font-weight:700}
+    .add{background:var(--accent-2);border:none;color:white;padding:8px 12px;border-radius:8px;cursor:pointer}
+    footer{padding:24px;background:white;margin-top:30px;text-align:center;color:var(--muted)}
+    /* responsive */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr;}
+      .search{flex:1}
+      .hero .side-img{order:2}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="PLACEHOLDER-LOGO.png" alt="Logo" />
+      <div class="brand">Falcon Style</div>
+    </div>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#collection">Collection</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <input class="search" placeholder="Search products..." oninput="filterProducts(this.value)" />
+      <a href="#cart">Cart ( <span id="cart-count">0</span> )</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="promo">
+        <h1>Fresh looks. Everyday style.</h1>
+        <p>Classic streetwear and modern essentials — updated every season. Free shipping on orders over ₹999.</p>
+        <a class="cta" href="#collection">Shop Collection</a>
+      </div>
+      <div class="side-img">
+        <img src="PLACEHOLDER-HERO.jpg" alt="Model wearing clothes" />
+      </div>
+    </section>
+
+    <section id="collection" class="container">
+      <h2 style="margin:14px 0">Featured Products</h2>
+      <div class="grid" id="products-grid">
+        <!-- product cards inserted by JS -->
+      </div>
+    </section>
+
+    <section id="about" class="container" style="margin-top:26px">
+      <div class="card">
+        <h2>About Falcon Style</h2>
+        <p style="color:var(--muted)">This is a simple template inspired by common clothing store layouts. Replace this text with your brand story. Use the product objects in the script to change product names, images, prices and links.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="container" style="margin-top:18px">
+      <div class="card">
+        <h2>Contact</h2>
+        <p style="color:var(--muted)">Email: <strong>hello@yourbrand.com</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Falcon Style — All Rights Reserved
+  </footer>
+
+  <script>
+    // ====== PRODUCT DATA ======
+    const PRODUCTS = [
+      {id:1,title:'Classic Tee',price:699,image:'PLACEHOLDER-1.jpg',desc:'Comfort cotton t-shirt'},
+      {id:2,title:'Denim Jacket',price:2499,image:'PLACEHOLDER-2.jpg',desc:'Premium washed denim jacket'},
+      {id:3,title:'Sporty Hoodie',price:1199,image:'PLACEHOLDER-3.jpg',desc:'Warm and soft fleece hoodie'},
+      {id:4,title:'Chino Pants',price:1399,image:'PLACEHOLDER-4.jpg',desc:'Slim-fit chinos'},
+      {id:5,title:'Sneakers',price:2999,image:'PLACEHOLDER-5.jpg',desc:'Lightweight street sneakers'},
+      {id:6,title:'Cap',price:399,image:'PLACEHOLDER-6.jpg',desc:'Adjustable cap with logo'}
+    ];
+
+    const grid = document.getElementById('products-grid');
+    const cartCount = document.getElementById('cart-count');
+    const CART_KEY = 'simple_cart_v1';
+
+    function renderProducts(list){
+      grid.innerHTML = '';
+      list.forEach(p=>{
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.title}" />
+          <h3>${p.title}</h3>
+          <p style='color:var(--muted);margin:0 0 8px'>${p.desc}</p>
+          <div class='price-row'>
+            <div class='price'>₹${p.price}</div>
+            <button class='add' onclick='addToCart(${p.id})'>Add</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      })
+    }
+
+    function addToCart(id){
+      const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+      cart.push(id);
+      localStorage.setItem(CART_KEY,JSON.stringify(cart));
+      cartCount.textContent = cart.length;
+      alert('Added to cart');
+    }
+
+    function loadCartCount(){
+      const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+      cartCount.textContent = cart.length;
+    }
+
+    function filterProducts(q){
+      q = (q || '').trim().toLowerCase();
+      if(!q) return renderProducts(PRODUCTS);
+      renderProducts(PRODUCTS.filter(p=>p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)));
+    }
+
+    // initial render
+    renderProducts(PRODUCTS);
+    loadCartCount();
+
+    // ====== USAGE NOTES ======
+    // To customize: replace PLACEHOLDER-*.jpg and PLACEHOLDER-LOGO.png with your images.
+    // Change the PRODUCTS array to edit item titles, prices and descriptions.
+    // When ready to publish: host these files on GitHub Pages / Netlify / Vercel and embed via iframe in Google Sites,
+    // or copy pieces (images + text + layout) into Google Sites manually.
+  </script>
+</body>
+</html>
